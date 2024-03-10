@@ -5,10 +5,14 @@ import numpy as np
 import scipy.signal as sig
 
 
-def fft(samples):
-    frequencies = np.fft.rfft(samples)
+def fft(samples, sample_rate):
+    fft_output = np.fft.rfft(samples)
 
-    return frequencies
+    magnitudes = np.abs(fft_output)
+
+    # frequencies = np.fft.rfftfreq(samples.size, d=1 / sample_rate)
+
+    return magnitudes
 
 
 def zero_crossing_rate(samples):
