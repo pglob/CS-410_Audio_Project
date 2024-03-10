@@ -3,24 +3,43 @@
 
 import numpy as np
 import scipy.signal as sig
+import math
 
 
-def fft(samples, sample_rate):
-    fft_output = np.fft.rfft(samples)
+def fft(frames):
+    fft_outputs = [np.fft.rfft(frame) for frame in frames]
 
-    magnitudes = np.abs(fft_output)
-
-    # frequencies = np.fft.rfftfreq(samples.size, d=1 / sample_rate)
+    magnitudes = [np.abs(fft_output) for fft_output in fft_outputs]
 
     return magnitudes
 
 
-def zero_crossing_rate(samples):
-    pass
+def calculate_frequencies(frame_length, sample_rate):
+    freq_resolution = sample_rate / frame_length
+
+    frequencies = [i * freq_resolution for i in range(frame_length // 2 + 1)]
+
+    return frequencies
 
 
-def short_term_energy(samples):
-    pass
+def zero_crossing_rate(frames):
+    zcr = np.zeros(len(frames))
+
+    for i in range(0, len(frames)):
+        # This cool one-liner was found at
+        # https://stackoverflow.com/questions/44319374/how-to-calculate-zero-crossing-rate-with-pyaudio-stream-data
+        zcr[i] = np.nonzero(np.diff(frames[i] > 0))[0].size
+
+    return zcr
+
+
+def short_term_energy(frames):
+    energy = np.zeros(len(frames))
+
+    for i in range(0, len(frames)):
+        energy[i] = np.sum(np.square(frames[i])) / len(frames)
+
+    return energy
 
 
 def detect_vowels(samples, frequencies, zcr, energy):

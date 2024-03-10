@@ -24,3 +24,16 @@ def normalize(samples):
         normalized_samples = samples_float
 
     return normalized_samples
+
+
+def trim_silence(samples):
+    pass
+
+
+def subdivide_samples(samples, samples_per_frame):
+    num_samples = len(samples)
+    num_subdivisions = num_samples // samples_per_frame
+
+    subdivided_samples = [samples[i*samples_per_frame:(i+1)*samples_per_frame] for i in range(num_subdivisions)]
+
+    return subdivided_samples
