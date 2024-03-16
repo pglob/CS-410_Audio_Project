@@ -26,8 +26,11 @@ def normalize(samples):
     return normalized_samples
 
 
-def trim_silence(samples):
-    pass
+def trim_silence(samples, tolerance=0.03):
+    start = np.where(np.abs(samples) > tolerance)[0][0]
+    end = np.where(np.abs(samples) > tolerance)[0][-1]
+
+    return samples[start:end+1]
 
 
 def subdivide_samples(samples, samples_per_frame):
@@ -37,3 +40,14 @@ def subdivide_samples(samples, samples_per_frame):
     subdivided_samples = [samples[i*samples_per_frame:(i+1)*samples_per_frame] for i in range(num_subdivisions)]
 
     return subdivided_samples
+
+
+def smooth_values(values, window_size=3):
+    smoothed = []
+
+    for i in range(len(values)):
+        start = max(i - window_size // 2, 0)
+        end = min(i + window_size // 2 + 1, len(values))
+        smoothed.append(sum(values[start:end]) / (end - start))
+
+    return smoothed
