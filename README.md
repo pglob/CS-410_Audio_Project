@@ -3,7 +3,7 @@
 Formerly, "Detecing Voices Using Phoneme Features".
 
 ### Overview
-This project was originally going to use phoneme features to detect if a human voice was present in a wav file. Due to scoping issues, the goal of the project was changed to detect specific vowels. Currently, it is set up to detect the IPA vowels, 'i', 'e', 'a', 'o', and 'u'. The program uses the zero crossing rate and energy of input to try and seperate voiced vs unvoiced speech. Then, using linear predictive coding, it finds formant frequencies present in the input. Then, the F1 and F2 formants are compared to known values to identify the vowel.
+This project was originally going to use phoneme features to detect if a human voice was present in a wav file. Due to scoping issues, the goal of the project was changed to detect specific vowels. Currently, it is set up to detect the IPA vowels, 'i', 'e', 'a', 'o', and 'u'. The program uses the zero crossing rate and energy of input to try and separate voiced vs unvoiced speech. Then, using linear predictive coding, it finds formant frequencies present in the input. Then, the F1 and F2 formants are compared to known values to identify the vowel.
 
 ### Building and Running
 The project contains a 'requirements.txt' file. Ensure that a recent version of Python is installed, along with pip. Run:
@@ -19,9 +19,9 @@ There are some wav files included in the 'Wav' folder.
 There may be a warning from pydub about ffmpeg not being installed. Installing ffmpeg removes the warning, but it is not required for running the program and there is no benefit to installing it.
 
 ### Testing
-I tested this project using recordings I made myself. This means my testing was not very robust, but I hit failure cases very quickly, so my testing was more to make sure my implementation was correct. If the output tended to recognize the correct vowels, I considered that a success. Given the complexity of the project, I had looser testing requirements.
+I tested this project manually using recordings I made myself. This means my testing was not very robust, but I hit failure cases very quickly, so my testing was more to make sure my implementation was correct. If the output tended to recognize the correct vowels, I considered that a success. Given the complexity of the project, I had looser testing requirements.
 
-I did not do testing on other voices. If I did, the expected formants would need adjusments because they were based on average male formants.
+I did not do testing on other voices. If I did, the expected formants would need adjustments because they were based on average male formants.
 
 Recordings made on different days had a notable difference in the output. A small amount of background noise would shift detected formants enough that the detected vowel would change on some frames.
 
@@ -60,7 +60,7 @@ Overall, this project went well. It was one of the more complex projects I've wo
 
 To improve the program, further tuning of input parameters is always a good thing. Dynamically adjusting expected formants based on the input's root frequency should enable this to work with other people's voices. Additional preprocessing to remove high frequency noise may allow for including F3 formants in the detection, potentially increasing accuracy. Adding more robust methods for detection such as Mel-frequency Cepstral coefficients would also go a long way.
 
-Currently, the program tries to interpret voiced consonants as vowels, leading to messy output around consonants. Adding detection for consonsants, would make it clearer where vowels are.
+Currently, the program tries to interpret voiced consonants as vowels, leading to messy output around consonants. Adding detection for consonants, would make it clearer where vowels are.
 ### License
 
 [Link to LICENSE file](./LICENSE)
