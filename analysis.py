@@ -5,13 +5,6 @@ import librosa
 import processing
 
 
-def fft(frames):
-    fft_outputs = [np.fft.rfft(frame) for frame in frames]
-
-    magnitudes = [np.abs(fft_output) for fft_output in fft_outputs]
-
-    return magnitudes
-
 
 def calculate_frequencies(sample_rate, frame_size):
     freq_resolution = sample_rate / frame_size
@@ -123,6 +116,8 @@ def detect_vowels(frames, zcr, energy, zcr_modifier, e_modifier, smoothing_windo
     results = []
     for i in range(len(frames)):
         score = 0
+
+        # Voiced speech tends to be low zcr, high energy
         if smooth_zcr[i] < zcr_threshold:
             score += 1
         if smooth_energy[i] > energy_threshold:

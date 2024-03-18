@@ -50,3 +50,25 @@ def smooth_values(values, smoothing_window):
         smoothed.append(sum(values[start:end]) / (end - start))
 
     return smoothed
+
+
+def smooth_vowel_list(vowel_results, window_size=5):
+    if window_size % 2 == 0:
+        window_size += 1
+
+    half_window = window_size // 2
+    smoothed_vowels = []
+
+    for i in range(len(vowel_results)):
+        start_index = max(i - half_window, 0)
+        end_index = min(i + half_window + 1, len(vowel_results))
+
+        window_elements = vowel_results[start_index:end_index]
+
+        if window_elements:
+            most_frequent = max(set(window_elements), key=window_elements.count)
+            smoothed_vowels.append(most_frequent)
+        else:
+            smoothed_vowels.append(None)
+
+    return smoothed_vowels
