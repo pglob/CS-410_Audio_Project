@@ -5,6 +5,19 @@ import scipy.signal as sig
 
 
 def bandpass_filter(samples, sample_rate, bandpass_low, bandpass_high, bandpass_order):
+    """
+    Apply a Butterworth bandpass filter to the input samples.
+
+    Args:
+        samples (np.ndarray): An array of audio samples to be filtered.
+        sample_rate (int): The sample rate of the audio signal in Hz.
+        bandpass_low (int): The lower bound of the frequency range to allow through the filter (in Hz).
+        bandpass_high (int): The upper bound of the frequency range to allow through the filter (in Hz).
+        bandpass_order (int): The order of the bandpass filter (the higher the order, the steeper the drop-off).
+
+    Returns:
+        np.ndarray: The bandpass-filtered audio samples.
+    """
     low = bandpass_low / (sample_rate / 2)
     high = bandpass_high / (sample_rate / 2)
     coefficients = sig.iirfilter(N=bandpass_order, Wn=[low, high], btype='bandpass', ftype='butter', output='sos')
@@ -14,6 +27,15 @@ def bandpass_filter(samples, sample_rate, bandpass_low, bandpass_high, bandpass_
 
 
 def normalize(samples):
+    """
+    Convert input samples to 32-bit float and normalize to a range between -1 and 1.
+
+    Args:
+        samples (np.ndarray): An array of audio samples, typically integers.
+
+    Returns:
+        np.ndarray: The normalized audio samples as floating-point numbers ranging from -1 to 1.
+    """
     samples_float = samples.astype(np.float32)
     max_value = np.max(np.abs(samples_float))
 
@@ -26,6 +48,16 @@ def normalize(samples):
 
 
 def trim_silence(samples, silence_tolerance):
+    """
+    Trim the silence from the beginning and end of the input samples.
+
+    Args:
+        samples (np.ndarray): An array of audio samples.
+        silence_tolerance (float): The amplitude level below which samples are considered silent.
+
+    Returns:
+        np.ndarray: The trimmed audio samples, with silence removed from the beginning and end.
+    """
     start = np.where(np.abs(samples) > silence_tolerance)[0][0]
     end = np.where(np.abs(samples) > silence_tolerance)[0][-1]
 
@@ -33,6 +65,16 @@ def trim_silence(samples, silence_tolerance):
 
 
 def subdivide_samples(samples, frame_size):
+    """
+    Subdivide an array of samples into smaller frames.
+
+    Args:
+        samples (np.ndarray): An array of audio samples to be subdivided.
+        frame_size (int): The size of each frame to which the samples are to be subdivided.
+
+    Returns:
+        List[np.ndarray]: A list of the subdivided sample frames.
+    """
     num_samples = len(samples)
     num_subdivisions = num_samples // frame_size
 
@@ -42,6 +84,16 @@ def subdivide_samples(samples, frame_size):
 
 
 def smooth_values(values, smoothing_window):
+    """
+    Smooth a sequence of values using a moving average.
+
+    Args:
+        values (np.ndarray): The sequence of values to be smoothed.
+        smoothing_window (int): The size of the window used for the moving average, must be a positive odd integer.
+
+    Returns:
+        List[float]: A list of the smoothed values.
+    """
     smoothed = []
 
     for i in range(len(values)):
@@ -52,7 +104,17 @@ def smooth_values(values, smoothing_window):
     return smoothed
 
 
-def smooth_vowel_list(vowel_results, window_size=5):
+def smooth_vowel_list(vowel_results, window_size):
+    """
+    Smooth a list of vowel results over a specified window size to improve consistency.
+
+    Args:
+        vowel_results (List[str]): A list of vowel identifications, where each element is a vowel label or None.
+        window_size (int): The size of the window over which to smooth the vowel results.
+
+    Returns:
+        List[str]: A list of the smoothed vowel results.
+        """
     if window_size % 2 == 0:
         window_size += 1
 

@@ -25,7 +25,7 @@ vowel_formants = {
     'e': {'F1': 390, 'F2': 2300},  # 'head'
     'a': {'F1': 850, 'F2': 1610},  # 'had'
     'o': {'F1': 360, 'F2': 640},   # 'hoed'
-    'u': {'F1': 250, 'F2': 595},   # 'hood'
+    'u': {'F1': 250, 'F2': 595},   # 'mood'
 }
 
 vowel_colors = {
@@ -33,5 +33,5 @@ vowel_colors = {
     'e': 'green',  # 'head'
     'a': 'red',  # 'had'
     'o': 'yellow',  # 'hoed'
-    'u': 'purple',  # 'hood'
+    'u': 'purple',  # 'mood'
 }

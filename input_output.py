@@ -6,7 +6,18 @@ from pydub import AudioSegment
 import matplotlib.pyplot as plt
 
 
-def read_wav(name: str):
+def read_wav(name):
+    """
+    Read a WAV file and convert it to mono.
+
+    Args:
+        name (str): The file name or path to the WAV file to be read.
+
+    Returns:
+        int: The sample rate of the audio in Hz.
+        np.ndarray: The audio samples in a numpy array.
+        float: The duration of the audio in seconds.
+    """
     wav = AudioSegment.from_wav(name)
 
     wav_mono = wav.set_channels(1)
@@ -18,10 +29,28 @@ def read_wav(name: str):
 
 
 def write_wav(samples, sample_rate, name):
+    """
+    Write audio samples to a WAV file.
+
+    Args:
+        samples (np.ndarray): An array of audio samples to be written to the file.
+        sample_rate (int): The sample rate of the audio in Hz.
+        name (str): The file name or path for the output WAV file.
+    """
     io.wavfile.write(name, sample_rate, samples)
 
 
 def plot_vowels(samples, sample_rate, detected_vowels, frame_size, vowel_colors):
+    """
+    Plot the waveform of audio samples and shade the regions corresponding to different vowels.
+
+    Args:
+        samples (np.ndarray): The audio samples to be plotted.
+        sample_rate (int): The sample rate of the audio in Hz.
+        detected_vowels (List[str]): A list of the detected vowels corresponding to each frame.
+        frame_size (int): The size of each frame in samples.
+        vowel_colors (dict): A dictionary mapping vowels to colors.
+    """
     plt.figure(figsize=(14, 6), dpi=120)
     time_samples = np.linspace(0, len(samples) / sample_rate, len(samples))
     plt.plot(time_samples, samples, label='Waveform', linewidth=0.5)
@@ -59,5 +88,3 @@ def plot_vowels(samples, sample_rate, detected_vowels, frame_size, vowel_colors)
     plt.legend(handles=legend_handles)
     plt.grid(True)
     plt.show()
-
-
