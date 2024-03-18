@@ -11,10 +11,11 @@ bandpass_order = 4
 
 silence_tolerance = 0.1
 
-zcr_modifier = 0.8  # Increasing zcr_modifier increases tolerance for determining voiced speech
-e_modifier = 0.2  # Decreasing e_modifier increases tolerance for determining voiced speech
+zcr_modifier = 1  # Increasing zcr_modifier increases tolerance for determining voiced speech
+e_modifier = 0.1  # Decreasing e_modifier increases tolerance for determining voiced speech
 
 smoothing_window = 3
+vowel_smoothing = 10
 
 lpc_order = 10  # A good order varies on sample rate. For 44100 samples per second, 10 seems to work well
 

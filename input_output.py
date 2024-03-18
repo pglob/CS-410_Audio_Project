@@ -40,13 +40,14 @@ def write_wav(samples, sample_rate, name):
     io.wavfile.write(name, sample_rate, samples)
 
 
-def plot_vowels(samples, sample_rate, detected_vowels, frame_size, vowel_colors):
+def plot_vowels(samples, sample_rate, filename, detected_vowels, frame_size, vowel_colors):
     """
     Plot the waveform of audio samples and shade the regions corresponding to different vowels.
 
     Args:
         samples (np.ndarray): The audio samples to be plotted.
         sample_rate (int): The sample rate of the audio in Hz.
+        filename (str): The name of the input file. This will be shown in the plot title.
         detected_vowels (List[str]): A list of the detected vowels corresponding to each frame.
         frame_size (int): The size of each frame in samples.
         vowel_colors (dict): A dictionary mapping vowels to colors.
@@ -84,7 +85,7 @@ def plot_vowels(samples, sample_rate, detected_vowels, frame_size, vowel_colors)
 
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
-    plt.title('Vowel Detection')
+    plt.title('Vowels In ' + filename)
     plt.legend(handles=legend_handles)
     plt.grid(True)
     plt.show()

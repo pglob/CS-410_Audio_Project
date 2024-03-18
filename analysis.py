@@ -203,6 +203,6 @@ def remove_unvoiced_consonants(frames, zcr, energy, zcr_modifier, e_modifier, sm
 
         detected_vowel = vowel_matches[i]
 
-        results.append(detected_vowel if score >= 1 else None)
+        results.append(detected_vowel if score >= 2 else None)
 
     return results

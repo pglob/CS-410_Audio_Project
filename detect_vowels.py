@@ -11,10 +11,9 @@ import parameters
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print("Usage: python detect_vowels.py <path_to_wav_file>")
-        # sys.exit(1)
+        sys.exit(1)
 
-    # wav_file_path = sys.argv[1]
-    wav_file_path = 'Wav/heed.wav'
+    wav_file_path = sys.argv[1]
 
     sample_rate, samples, length = input_output.read_wav(name=wav_file_path)
 
@@ -43,7 +42,7 @@ if __name__ == '__main__':
 
     # Formants may be noisy, so remove some erroneous vowel matches
     smoothed_vowel_matches = processing.smooth_vowel_list(vowel_results=vowel_matches,
-                                                          window_size=10)
+                                                          window_size=parameters.vowel_smoothing)
 
     # Unvoiced consonants are matched by analysis.calculate_formants, so remove them.
     result = analysis.remove_unvoiced_consonants(frames=frames,
@@ -56,6 +55,7 @@ if __name__ == '__main__':
 
     input_output.plot_vowels(samples=processed_samples,
                              sample_rate=sample_rate,
+                             filename=wav_file_path,
                              detected_vowels=result,
                              frame_size=parameters.frame_size,
                              vowel_colors=parameters.vowel_colors)
